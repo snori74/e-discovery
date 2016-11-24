@@ -1,0 +1,81 @@
+
+
+	LITIGATION SUPPORT
+
+These notes document some of the issues involves, and some of the techniques
+and approaches that we've taken.
+
+1 - SOURCE MATERIAL
+The lawyers have provided the raw source material in the form of USB drives or sticks
+containing folder structures, and files. We get an IT contact person who we can ask for 
+clarification, but we have found that:
+
+	(a) it is best to make it clear that we will work only with what we are given, and that 
+	the technical details of retreiving the files and selection of which are handed to us is 
+	purely their responsibility
+
+	(b) if there is any question of deceit, holding back of relevant data, or simply lack of
+	professioanlism in the collection of the data then this falls on the client
+
+2 - PRESERVING METADATA
+Care needs to be taken to not contaminate any metadata. This means avaoiding opening files in 
+applications which might write data back, and to preserve the original "last modified date' when 
+copying. As noted above, we are assuming good will and professionalism, so a "forensic" level of
+rigor is not required.
+
+3 - PROCESSING THE DATA
+The core of the automated process is a search for matching text. For files in plain text this is 
+simple, but for otheres they need to be first broken down. A variety of techniques and tools are 
+used by our scripts, including:
+
+	(a) Identifying contents with the Linux 'file' command. In many cases this provides too 
+	much detail. As a rule the text before the first comma can be selected, so that "HTML 
+	document, ISO-8859 text, with very long lines, with no line terminators" becomes simply
+	"HTML document", but a script to identify all the filetypes is an important first step.
+
+	(b) We can "burst" a Microsoft .PST file with the 'readpst' utility.
+
+	(c) Any (most?) PDF documents can be converted to text with using the 'tesseract' OCR 
+	package.
+
+	(d) For propriatary formats we can often extract suitable text to search on using the 
+	"strings" utility 
+ 
+So, effectively we take the original data in \RAW, and create a version of this more suited to our 
+searching under \WORKING - and then a final \RESULTS folder with data in the best form for the
+client and the court. Only \RESULTS needs to be provided to the client, as \RAW should be exactly 
+as provided by them - and \WORKING is setup purely for our convenince. 
+
+
+4 - OUTPUT FORMAT
+The format needs to be convenient for the client, the oppposing party and the judge. Generally this
+is in the form of an Excel spreadsheet list of the documents, with columns of relevant fields such
+as "To:" and "From:" and dates - and if possible a shortcut link to a viewable copy of the 
+document. 
+
+This may require that the original be output to a PDF - and this is acceptable as long as all 
+relevant detail is included. (In the past, have had to be printed out).
+
+Some difficult issues:
+
+	(a) Email attachments are to be treated as documents in their own right, but the format
+	in the spreadsheet needs to list them immediatly after the email "body", and ensure that 
+	the link is clear.
+	
+	(b) Duplicates, of both documents and emails, are to be removed if possible. This means 
+	that as long as one late email includes all the previous "thread" within it then the 
+	earlier messages should be left out. Because any sender has the option of editing this 
+	"previous history" text this is a dangerous judgement for us to make - so all matching 
+	emails should be included regardless of duplicate thread history.
+
+	(c) Document duplicates are rather simpler. Using md5sum we can easily create a unique 
+	"hash" of each document, and a sorted list highlighting any duplicates
+
+	(d) Again the client needs to make the decision on which duplicates to remove because, 
+	in an extreme example, these same docement may be found at \plans\BEST.DOC, 
+	\BILL\Secret\PLAN55.DOC and as an attachment to an email from Sue to Sam - under a 
+	different name again.
+
+
+
+  
